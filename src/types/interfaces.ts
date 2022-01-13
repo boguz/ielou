@@ -9,3 +9,8 @@ export interface ProjectInterface {
   title: string;
   notes: NoteInterface[];
 }
+
+export type IelouStoreType = {
+  activeProject: string | null;
+  projects: ProjectInterface[];
+};

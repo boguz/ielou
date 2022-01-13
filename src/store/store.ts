@@ -1,7 +1,5 @@
-import { IelouStoreType } from '../types/types.js';
+import { IelouStoreType } from '../types/interfaces.js';
 import { STORE_NAME } from '../config/constants.js';
-
-export const defaultStore: IelouStoreType = [];
 
 export function updateStore(store: IelouStoreType) {
   return localStorage.setItem(STORE_NAME, JSON.stringify(store));

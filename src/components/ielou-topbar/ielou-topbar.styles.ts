@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { BREAKPOINT } from '../../config/constants.js';
 
 export const ielouTopbarStyles = css`
   :host {
@@ -33,6 +34,12 @@ export const ielouTopbarStyles = css`
     .burger:hover {
       --burgton-button-line-color: var(--color-primary-light);
       --burgton-button-line-color-active: var(--color-primary-light);
+    }
+  }
+
+  @media screen and (min-width: ${BREAKPOINT}px) {
+    .burger {
+      display: none;
     }
   }
 `;

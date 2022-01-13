@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { BREAKPOINT } from '../../config/constants.js';
 
 export const ielouCssVariables = css`
   :host {
@@ -24,6 +25,9 @@ export const ielouCssVariables = css`
     /* FONTS */
     --font-weight-medium: 500;
     --font-weight-bold: 700;
+    --font-size-normal: 1rem;
+    --font-size-small: 0.875rem;
+    --font-size-smaller: 0.75rem;
 
     /* TOPBAR */
     --topbar-height: 3rem;
@@ -35,8 +39,10 @@ export const ielouCssVariables = css`
     --sidebar-active-marker-width: 4px;
   }
 
-  @media screen and (min-width: 640px) {
-    /* SIDEBAR */
-    --sidebar-width: 320px;
+  @media screen and (min-width: ${BREAKPOINT}px) {
+    :host {
+      /* SIDEBAR */
+      --sidebar-width: 320px;
+    }
   }
 `;

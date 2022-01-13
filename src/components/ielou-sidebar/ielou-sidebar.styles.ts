@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { BREAKPOINT } from '../../config/constants.js';
 
 export const ielouSidebarStyles = css`
   :host {
@@ -31,6 +32,12 @@ export const ielouSidebarStyles = css`
     color: var(--color-text-secondary);
     position: relative;
     cursor: pointer;
+  }
+
+  .list__item--empty {
+    font-size: var(--font-size-small);
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   .list__item[active] {
@@ -77,6 +84,13 @@ export const ielouSidebarStyles = css`
 
     .new-project-button:hover {
       background-color: var(--color-primary-light);
+    }
+  }
+
+  @media screen and (min-width: ${BREAKPOINT}px) {
+    :host {
+      width: var(--sidebar-width);
+      padding: var(--space-normal);
     }
   }
 `;

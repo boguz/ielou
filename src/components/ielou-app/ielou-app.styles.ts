@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { BREAKPOINT } from '../../config/constants.js';
 
 export const ielouAppStyles = css`
   :host {
@@ -12,5 +13,13 @@ export const ielouAppStyles = css`
       'topbar topbar'
       'sidebar stage';
     transition: all 2s ease-out;
+  }
+
+  @media screen and (min-width: ${BREAKPOINT}px) {
+    :host {
+      grid-template-areas:
+        'topbar stage'
+        'sidebar stage';
+    }
   }
 `;

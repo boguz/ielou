@@ -1,8 +1,8 @@
 import { LitElement, html } from 'lit';
+// @ts-ignore
 import BurgtonButton from 'burgton-button';
 import { ielouStyles } from '../ielou-styles/ielou-styles.js';
 import { ielouTopbarStyles } from './ielou-topbar.styles.js';
-// @ts-ignore
 
 export class IelouTopbar extends LitElement {
   static styles = [ielouStyles, ielouTopbarStyles];
