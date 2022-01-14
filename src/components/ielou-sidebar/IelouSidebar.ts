@@ -21,7 +21,12 @@ export class IelouSidebar extends LitElement {
           : this._renderNoProjectsMessage()}
       </ul>
       <div class="bottom-button">
-        <button class="new-project-button">New Project</button>
+        <button
+          class="new-project-button"
+          @click="${this._onNewProjectButtonClick}"
+        >
+          New Project
+        </button>
       </div>
     `;
   }
@@ -32,6 +37,8 @@ export class IelouSidebar extends LitElement {
         class="list__item"
         id="${project.id}"
         ?active="${project.id === this.activeProject}"
+        @click="${this._onListItemClick}"
+        @keyDown="${this._onListItemKeyDown}"
       >
         <span class="list__item-name">${project.title}</span>
         <span class="list__item-count">${project.notes.length}</span>
@@ -45,5 +52,34 @@ export class IelouSidebar extends LitElement {
         No projects yet. Click the "New Project" button to get started
       </li>
     `;
+  }
+
+  _onNewProjectButtonClick() {
+    this.dispatchEvent(
+      new CustomEvent('ielou-new-project-button-click', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  _onListItemClick(event: MouseEvent) {
+    const target = event.currentTarget as HTMLDListElement;
+    this.dispatchEvent(
+      new CustomEvent('ielou-select-project', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          selectedProject: target.getAttribute('id'),
+        },
+      })
+    );
+  }
+
+  _onListItemKeyDown(event: KeyboardEvent) {
+    const target = event.currentTarget as HTMLDListElement;
+    if (event.code === 'Enter' || event.key === 'Enter') {
+      target.click();
+    }
   }
 }

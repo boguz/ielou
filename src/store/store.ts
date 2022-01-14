@@ -1,8 +1,8 @@
 import { IelouStoreType } from '../types/interfaces.js';
 import { STORE_NAME } from '../config/constants.js';
 
-export function updateStore(store: IelouStoreType) {
-  return localStorage.setItem(STORE_NAME, JSON.stringify(store));
+export function updateStore(state: IelouStoreType) {
+  return localStorage.setItem(STORE_NAME, JSON.stringify(state));
 }
 
 export function getStore(): IelouStoreType {
