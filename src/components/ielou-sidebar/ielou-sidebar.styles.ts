@@ -54,27 +54,19 @@ export const ielouSidebarStyles = css`
     background-color: var(--color-primary);
   }
 
-  .bottom-button {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: var(--space-normal);
-    box-sizing: border-box;
-    width: 100%;
-  }
-
   .new-project-button {
-    background-color: var(--color-primary);
-    color: var(--color-surface);
-    cursor: pointer;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
-    outline: none;
+    width: 100%;
+    margin-top: var(--space-double);
     padding: var(--space-half);
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+    border: 3px dashed var(--color-text-secondary);
     border-radius: var(--border-radius-normal);
+    cursor: pointer;
+    outline: none;
   }
 
   @media (hover: hover) {
@@ -83,7 +75,8 @@ export const ielouSidebarStyles = css`
     }
 
     .new-project-button:hover {
-      background-color: var(--color-primary-light);
+      border: 3px dashed var(--color-primary);
+      color: var(--color-primary);
     }
   }
 

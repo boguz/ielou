@@ -20,14 +20,12 @@ export class IelouSidebar extends LitElement {
             )
           : this._renderNoProjectsMessage()}
       </ul>
-      <div class="bottom-button">
-        <button
-          class="new-project-button"
-          @click="${this._onNewProjectButtonClick}"
-        >
-          New Project
-        </button>
-      </div>
+      <button
+        class="new-project-button"
+        @click="${this._onNewProjectButtonClick}"
+      >
+        New Project
+      </button>
     `;
   }
 

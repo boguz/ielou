@@ -61,4 +61,10 @@ export const ielouStageStyles = css`
       background-color: var(--color-primary);
     }
   }
+
+  @media screen and (min-width: 840px) {
+    :host {
+      padding: var(--space-double);
+    }
+  }
 `;
