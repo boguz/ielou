@@ -1,6 +1,10 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { IelouStoreType, ProjectInterface } from '../../types/interfaces.js';
+import {
+  IelouStoreType,
+  NoteInterface,
+  ProjectInterface,
+} from '../../types/interfaces.js';
 import { getStore, updateStore } from '../../store/store.js';
 import { defaultStore } from '../../config/defaultStore.js';
 import { ielouAppStyles } from './ielou-app.styles.js';
@@ -9,6 +13,7 @@ import '../ielou-topbar/ielou-topbar.js';
 import '../ielou-sidebar/ielou-sidebar.js';
 import '../ielou-stage/ielou-stage.js';
 import { createProject } from '../../factories/newProject.js';
+import { createNote } from '../../factories/newNote.js';
 
 export class IelouApp extends LitElement {
   @property({ type: Array }) state: IelouStoreType = defaultStore;
@@ -44,6 +49,10 @@ export class IelouApp extends LitElement {
     this._onSelectProject = this._onSelectProject.bind(this);
     this._onUpdateProjectTitle = this._onUpdateProjectTitle.bind(this);
     this._onDeleteProject = this._onDeleteProject.bind(this);
+    this._onNewNoteButtonClick = this._onNewNoteButtonClick.bind(this);
+    this._onNoteDeleteClick = this._onNoteDeleteClick.bind(this);
+    this._onNoteIsPinnedToggle = this._onNoteIsPinnedToggle.bind(this);
+    this._onUpdateNote = this._onUpdateNote.bind(this);
   }
 
   connectedCallback() {
@@ -61,6 +70,16 @@ export class IelouApp extends LitElement {
       this._onUpdateProjectTitle
     );
     this.addEventListener('ielou-delete-project', this._onDeleteProject);
+    this.addEventListener(
+      'ielou-new-note-button-click',
+      this._onNewNoteButtonClick
+    );
+    this.addEventListener('ielou-delete-note', this._onNoteDeleteClick);
+    this.addEventListener(
+      'ielou-note-is-pinned-toggle',
+      this._onNoteIsPinnedToggle
+    );
+    this.addEventListener('ielou-update-note', this._onUpdateNote);
   }
 
   disconnectedCallback() {
@@ -81,6 +100,16 @@ export class IelouApp extends LitElement {
       this._onUpdateProjectTitle
     );
     this.removeEventListener('ielou-delete-project', this._onDeleteProject);
+    this.removeEventListener(
+      'ielou-new-note-button-click',
+      this._onNewNoteButtonClick
+    );
+    this.removeEventListener('ielou-delete-note', this._onNoteDeleteClick);
+    this.removeEventListener(
+      'ielou-note-is-pinned-toggle',
+      this._onNoteIsPinnedToggle
+    );
+    this.removeEventListener('ielou-update-note', this._onUpdateNote);
   }
 
   updateState() {
@@ -132,6 +161,61 @@ export class IelouApp extends LitElement {
       project => project.id.toString() !== projectId.toString()
     );
     newState.activeProject = null;
+    this._onUpdateStore(newState);
+  }
+
+  _onNewNoteButtonClick(event: Event) {
+    const { projectId } = (<CustomEvent>event).detail;
+    const newNote = createNote();
+    const newState = this.state;
+    newState.projects.map((project: ProjectInterface) => {
+      if (project.id === projectId) {
+        project.notes.push(newNote);
+      }
+      return project;
+    });
+    this._onUpdateStore(newState);
+  }
+
+  _onNoteDeleteClick(event: Event) {
+    const { noteId } = (<CustomEvent>event).detail;
+    const newState = this.state;
+    newState.projects = newState.projects.map((project: ProjectInterface) => {
+      project.notes = project.notes.filter(
+        (note: NoteInterface) => note.id.toString() !== noteId.toString()
+      );
+      return project;
+    });
+    this._onUpdateStore(newState);
+  }
+
+  _onNoteIsPinnedToggle(event: Event) {
+    const { noteId } = (<CustomEvent>event).detail;
+    const newState = this.state;
+    newState.projects = newState.projects.map((project: ProjectInterface) => {
+      project.notes = project.notes.map((note: NoteInterface) => {
+        if (note.id.toString() === noteId.toString()) {
+          note.isPinned = !note.isPinned;
+        }
+        return note;
+      });
+      return project;
+    });
+    this._onUpdateStore(newState);
+  }
+
+  _onUpdateNote(event: Event) {
+    const { noteId, newContent } = (<CustomEvent>event).detail;
+    const newState = this.state;
+    newState.projects = newState.projects.map((project: ProjectInterface) => {
+      project.notes = project.notes.map((note: NoteInterface) => {
+        if (note.id.toString() === noteId.toString()) {
+          note.content = newContent;
+        }
+        return note;
+      });
+      return project;
+    });
     this._onUpdateStore(newState);
   }
 

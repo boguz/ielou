@@ -17,7 +17,7 @@ export const ielouStageStyles = css`
   }
 
   .title {
-    font-size: var(--font-size-big);
+    font-size: var(--font-size-bigger);
     color: var(--color-text-primary);
     margin: 0;
     outline: none;
@@ -56,15 +56,46 @@ export const ielouStageStyles = css`
     cursor: pointer;
   }
 
+  .notes {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--note-width-min), 1fr)
+    );
+    grid-gap: var(--space-normal);
+  }
+
+  .new-note-button {
+    width: var(--note-width);
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    border: 4px dashed var(--color-text-secondary);
+    font-size: var(--font-size-big);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: var(--border-radius-normal);
+  }
+
   @media (hover: hover) {
     .delete-button:hover {
       background-color: var(--color-primary);
+    }
+
+    .new-note-button:hover {
+      border: 4px dashed var(--color-primary);
+      color: var(--color-primary);
     }
   }
 
   @media screen and (min-width: 840px) {
     :host {
-      padding: var(--space-double);
+      padding: var(--space-normal) var(--space-double) var(--space-double);
     }
   }
 `;

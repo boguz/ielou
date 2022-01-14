@@ -28,7 +28,8 @@ export const ielouCssVariables = [
       /* FONTS */
       --font-weight-medium: 500;
       --font-weight-bold: 700;
-      --font-size-big: 1.75rem;
+      --font-size-bigger: 1.75rem;
+      --font-size-big: 1.25rem;
       --font-size-normal: 1rem;
       --font-size-small: 0.875rem;
       --font-size-smaller: 0.75rem;
@@ -44,6 +45,10 @@ export const ielouCssVariables = [
 
       /* STAGE */
       --delete-button-size: 1.5rem;
+
+      /* NOTE */
+      --note-width-min: 200px;
+      --note-icon-size: 1.25rem;
     }
 
     @media screen and (min-width: ${BREAKPOINT}px) {
