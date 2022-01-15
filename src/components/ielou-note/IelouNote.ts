@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lit';
+import { ref, createRef } from 'lit/directives/ref.js';
 import { property } from 'lit/decorators.js';
 import { ielouStyles } from '../ielou-styles/ielou-styles.js';
 import { NoteInterface } from '../../types/interfaces.js';
@@ -7,7 +8,33 @@ import { ielouNoteStyles } from './ielou-note.styles.js';
 export class IelouNote extends LitElement {
   @property({ type: Object }) note: NoteInterface | null = null;
 
+  @property({ type: Number }) countCurrent: number = 0;
+
   static styles = [ielouStyles, ielouNoteStyles];
+
+  private countTotal: number;
+
+  private allowKeysWhenFull: string[];
+
+  contentRef = createRef<HTMLParagraphElement>();
+
+  get getCount(): number {
+    const contentText = this.contentRef.value!.textContent!.trim() || '';
+    return contentText.length || 0;
+  }
+
+  constructor() {
+    super();
+
+    this.countTotal = 80;
+    this.allowKeysWhenFull = [
+      'Backspace',
+      'ArrowRight',
+      'ArrowLeft',
+      'ArrowUp',
+      'ArrowDown',
+    ];
+  }
 
   render() {
     if (this.note) {
@@ -30,12 +57,23 @@ export class IelouNote extends LitElement {
           @dblclick="${this._onContentDoubleClick}"
           @blur="${this._onContentBlur}"
           @keydown="${this._onContentKeyDown}"
+          @input="${this._onContentInput}"
+          ${ref(this.contentRef)}
         >
           ${this.note.content}
         </p>
+        <div class="count">
+          <span class="count__current">${this.countCurrent}</span>
+          /
+          <span class="count__total">${this.countTotal}</span>
+        </div>
       `;
     }
     return null;
+  }
+
+  firstUpdated() {
+    this.countCurrent = this.getCount;
   }
 
   _onDeleteButtonClick() {
@@ -87,9 +125,23 @@ export class IelouNote extends LitElement {
     );
   }
 
+  _onContentInput(event: KeyboardEvent) {
+    const target = event.currentTarget as HTMLParagraphElement;
+    if (!target.textContent!.trim().length) return 0;
+    this.countCurrent = this.getCount;
+    return 0;
+  }
+
   _onContentKeyDown(event: KeyboardEvent) {
     const target = event.currentTarget as HTMLParagraphElement;
-    if (event.code === 'Enter' || event.key === 'Enter') {
+    const contentLength = target.textContent!.trim().length;
+    const eventCode = event.code || event.key;
+    if (
+      contentLength >= this.countTotal &&
+      !this.allowKeysWhenFull.includes(eventCode)
+    ) {
+      event.preventDefault();
+    } else if (event.code === 'Enter' || event.key === 'Enter') {
       target.blur();
     }
   }

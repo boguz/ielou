@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { BREAKPOINT } from '../../config/constants.js';
 
 export const ielouNoteStyles = css`
   :host {
@@ -72,6 +73,15 @@ export const ielouNoteStyles = css`
     border-bottom: 2px dashed var(--color-primary);
   }
 
+  .count {
+    position: absolute;
+    bottom: var(--space-half);
+    right: var(--space-half);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+  }
+
   @media (hover: hover) {
     .button:hover {
       background-color: var(--color-primary);
@@ -79,6 +89,17 @@ export const ielouNoteStyles = css`
 
     .button--pin[active]:hover {
       background-color: var(--color-primary-light);
+    }
+  }
+
+  @media screen and (min-width: ${BREAKPOINT}px) {
+    .count {
+      display: none;
+    }
+
+    :host(:hover) .count,
+    :host(:focus-within) .count {
+      display: block;
     }
   }
 `;

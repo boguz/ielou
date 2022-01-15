@@ -1,6 +1,3 @@
-- [ ] Don't scroll the sidebar
-- [ ] Add word count to note
-- [ ] Prevent further note input when letter limit reached
 - [ ]
 - [ ]
 - [ ]
