@@ -32,6 +32,7 @@ export const ielouSidebarStyles = css`
     color: var(--color-text-secondary);
     position: relative;
     cursor: pointer;
+    gap: var(--space-half);
   }
 
   .list__item--empty {
@@ -52,6 +53,12 @@ export const ielouSidebarStyles = css`
     top: 0;
     right: calc(var(--space-normal) * -1);
     background-color: var(--color-primary);
+  }
+
+  .list__item-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .new-project-button {
@@ -82,8 +89,12 @@ export const ielouSidebarStyles = css`
 
   @media screen and (min-width: ${BREAKPOINT}px) {
     :host {
+      position: fixed;
+      top: var(--topbar-height);
+      height: calc(100vh - var(--topbar-height));
       width: var(--sidebar-width);
       padding: var(--space-normal);
+      overflow-y: scroll;
     }
   }
 `;

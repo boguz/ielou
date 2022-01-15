@@ -38,6 +38,12 @@ export const ielouTopbarStyles = css`
   }
 
   @media screen and (min-width: ${BREAKPOINT}px) {
+    :host {
+      position: fixed;
+      top: 0;
+      width: var(--sidebar-width);
+    }
+
     .burger {
       display: none;
     }

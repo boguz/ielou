@@ -1,7 +1,6 @@
-- [ ] Show only one line of title on sidebar with ellipsis
-- [ ]
-- [ ]
-- [ ]
+- [ ] Don't scroll the sidebar
+- [ ] Add word count to note
+- [ ] Prevent further note input when letter limit reached
 - [ ]
 - [ ]
 - [ ]

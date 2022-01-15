@@ -61,6 +61,9 @@ export const ielouStageStyles = css`
     mask-image: var(--ielou-icon-delete);
     -webkit-mask-image: var(--ielou-icon-delete);
     cursor: pointer;
+    align-self: flex-start;
+    top: 0.5rem;
+    position: relative;
   }
 
   .date {
@@ -121,7 +124,8 @@ export const ielouStageStyles = css`
 
   @media screen and (min-width: 840px) {
     :host {
-      padding: var(--space-normal) var(--space-double) var(--space-double);
+      padding: var(--space-normal) var(--space-double) var(--space-double)
+        calc(var(--sidebar-width) + var(--space-double));
     }
   }
 `;
