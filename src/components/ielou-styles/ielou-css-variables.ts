@@ -7,10 +7,11 @@ export const ielouCssVariables = [
   css`
     :host {
       /* COLORS */
-      --color-surface: #fce5ad;
+      --color-surface: #fbeac0;
       --color-primary: #6a9a8f;
       --color-primary-light: #6da798;
-      --color-text-primary: #404446;
+      --color-pinned: #eec0b5;
+      --color-text-primary: #4c5051;
       --color-text-secondary: #40444677;
 
       /* SPACING */

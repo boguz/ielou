@@ -7,6 +7,8 @@ export interface NoteInterface {
 export interface ProjectInterface {
   id: string;
   title: string;
+  description: string;
+  date: string;
   notes: NoteInterface[];
 }
 

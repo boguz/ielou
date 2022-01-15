@@ -10,13 +10,19 @@ export const ielouStageStyles = css`
 
   .header {
     width: 100%;
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: space-between;
+    grid-template-areas:
+      'title delete'
+      'date date'
+      'description description';
+    grid-template-columns: 1fr auto;
     margin-bottom: var(--space-normal);
   }
 
   .title {
+    grid-area: title;
     font-size: var(--font-size-bigger);
     color: var(--color-text-primary);
     margin: 0;
@@ -40,6 +46,7 @@ export const ielouStageStyles = css`
   }
 
   .delete-button {
+    grid-area: delete;
     border: none;
     outline: none;
     height: var(--delete-button-size);
@@ -54,6 +61,25 @@ export const ielouStageStyles = css`
     mask-image: var(--ielou-icon-delete);
     -webkit-mask-image: var(--ielou-icon-delete);
     cursor: pointer;
+  }
+
+  .date {
+    grid-area: date;
+    margin: 0;
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+
+  .description {
+    grid-area: description;
+    margin: var(--space-normal) 0;
+    color: var(--color-text-primary);
+    border-bottom: 2px transparent;
+    outline: none;
+  }
+
+  .description:focus {
+    border-bottom: 2px dashed var(--color-primary);
   }
 
   .notes {

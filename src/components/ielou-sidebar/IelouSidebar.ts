@@ -47,7 +47,7 @@ export class IelouSidebar extends LitElement {
   _renderNoProjectsMessage() {
     return html`
       <li class="list__item list__item--empty">
-        No projects yet. Click the "New Project" button to get started
+        No projects yet. Click the "New Project" button to get started...
       </li>
     `;
   }

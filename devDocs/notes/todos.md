@@ -1,0 +1,13 @@
+- [ ] Show only one line of title on sidebar with ellipsis
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+

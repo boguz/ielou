@@ -17,6 +17,10 @@ export const ielouNoteStyles = css`
     border-radius: var(--border-radius-normal);
   }
 
+  :host([pinned]) {
+    background-color: var(--color-pinned);
+  }
+
   .buttons {
     position: absolute;
     top: var(--space-half);

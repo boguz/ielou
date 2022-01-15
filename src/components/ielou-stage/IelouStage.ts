@@ -29,12 +29,21 @@ export class IelouStage extends LitElement {
         <div class="header">
           <h2
             class="title"
-            @dblclick="${this._onTitleDoubleClick}"
+            @dblclick="${this._onElementDoubleClick}"
             @blur="${this._onTitleBlur}"
-            @keydown="${this._onTitleKeyDown}"
+            @keydown="${this._onElementKeyDown}"
           >
             ${this.project.title}
           </h2>
+          <p class="date">${this.project.date}</p>
+          <p
+            class="description"
+            @dblclick="${this._onElementDoubleClick}"
+            @blur="${this._onDescriptionBlur}"
+            @keydown="${this._onElementKeyDown}"
+          >
+            ${this.project.description}
+          </p>
           <button
             class="delete-button"
             @click="${this._onDeleteButtonClick}"
@@ -43,7 +52,10 @@ export class IelouStage extends LitElement {
         <section class="notes">
           ${this.pinnedNotes.map(
             (note: NoteInterface) =>
-              html`<ielou-note .note="${note}"></ielou-note>`
+              html`<ielou-note
+                .note="${note}"
+                ?pinned="${note.isPinned}"
+              ></ielou-note>`
           )}
           ${this.unpinnedNotes.map(
             (note: NoteInterface) =>
@@ -61,7 +73,7 @@ export class IelouStage extends LitElement {
     return html` <h2 class="no-project-selected">Select a project...</h2> `;
   }
 
-  _onTitleDoubleClick(event: MouseEvent) {
+  _onElementDoubleClick(event: MouseEvent) {
     const target = event.currentTarget as HTMLHeadingElement;
     target.setAttribute('contenteditable', '');
     target.focus();
@@ -81,8 +93,22 @@ export class IelouStage extends LitElement {
     );
   }
 
-  _onTitleKeyDown(event: KeyboardEvent) {
+  _onDescriptionBlur(event: FocusEvent) {
     const target = event.currentTarget as HTMLHeadingElement;
+    this.dispatchEvent(
+      new CustomEvent('ielou-update-project-description', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          projectId: this.project!.id,
+          newDescription: target.textContent,
+        },
+      })
+    );
+  }
+
+  _onElementKeyDown(event: KeyboardEvent) {
+    const target = event.currentTarget as HTMLElement;
     if (event.key === 'Enter' || event.code === 'Enter') {
       target.blur();
     }

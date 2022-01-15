@@ -48,6 +48,8 @@ export class IelouApp extends LitElement {
     this._onNewProjectButtonClick = this._onNewProjectButtonClick.bind(this);
     this._onSelectProject = this._onSelectProject.bind(this);
     this._onUpdateProjectTitle = this._onUpdateProjectTitle.bind(this);
+    this._onUpdateProjectDescription =
+      this._onUpdateProjectDescription.bind(this);
     this._onDeleteProject = this._onDeleteProject.bind(this);
     this._onNewNoteButtonClick = this._onNewNoteButtonClick.bind(this);
     this._onNoteDeleteClick = this._onNoteDeleteClick.bind(this);
@@ -68,6 +70,10 @@ export class IelouApp extends LitElement {
     this.addEventListener(
       'ielou-update-project-title',
       this._onUpdateProjectTitle
+    );
+    this.addEventListener(
+      'ielou-update-project-description',
+      this._onUpdateProjectDescription
     );
     this.addEventListener('ielou-delete-project', this._onDeleteProject);
     this.addEventListener(
@@ -98,6 +104,10 @@ export class IelouApp extends LitElement {
     this.removeEventListener(
       'ielou-update-project-title',
       this._onUpdateProjectTitle
+    );
+    this.removeEventListener(
+      'ielou-update-project-description',
+      this._onUpdateProjectDescription
     );
     this.removeEventListener('ielou-delete-project', this._onDeleteProject);
     this.removeEventListener(
@@ -147,6 +157,20 @@ export class IelouApp extends LitElement {
       if (project.id === projectId) {
         const editedProject = project;
         editedProject.title = newTitle.trim();
+      }
+      return project;
+    });
+    newState.projects = newProjects;
+    this._onUpdateStore(newState);
+  }
+
+  _onUpdateProjectDescription(event: Event) {
+    const { projectId, newDescription } = (<CustomEvent>event).detail;
+    const newState = this.state;
+    const newProjects = newState.projects.map(project => {
+      if (project.id === projectId) {
+        const editedProject = project;
+        editedProject.description = newDescription.trim();
       }
       return project;
     });
