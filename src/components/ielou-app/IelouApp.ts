@@ -41,7 +41,7 @@ export class IelouApp extends LitElement {
     }
 
     this.state = getStore();
-    console.log('STORE', this.state);
+    // console.log('STORE', this.state);
 
     this._onUpdateStore = this._onUpdateStore.bind(this);
     this._onBurgerClick = this._onBurgerClick.bind(this);

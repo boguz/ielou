@@ -49,3 +49,20 @@ export const noteContents: string[] = [
   '1, 2, 3, let´s go!',
   'Badabim, badabum!',
 ];
+
+export const startPageSentences: string[] = [
+  'Select a project...',
+  'Select a project to get started!',
+  'Hello there, how are you doing?',
+  'Let´s get stuff done today!!!',
+  'Howdy partner 🤠 how are you doing?',
+  'Don´t look now, but there is a 🦖 right behind you!',
+  'Are you superstitious or just a little stitious?',
+  'Ned, I would love to stand here and talk with you—but I’m not going to',
+  'I walk around like everything’s fine, but deep down, inside my shoe, my sock is sliding off',
+  'I’m not good at the advice. Can I interest you in a sarcastic comment?',
+  'Anyone who lives within their means suffers from a lack of imagination',
+  'Outside of a dog, a book is man’s best friend. Inside of a dog, it’s too dark to read',
+  '✨ Today will be great!',
+  '🚀 Fly me to the moon, let me play among the stars',
+];

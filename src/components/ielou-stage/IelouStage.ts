@@ -3,6 +3,8 @@ import { property } from 'lit/decorators.js';
 import { ielouStyles } from '../ielou-styles/ielou-styles.js';
 import { ielouStageStyles } from './ielou-stage.styles.js';
 import { NoteInterface, ProjectInterface } from '../../types/interfaces.js';
+import { getRandomItemFromArray } from '../../utils/utils.js';
+import { startPageSentences } from '../../config/randomSentences.js';
 
 import '../ielou-note/ielou-note.js';
 
@@ -70,7 +72,11 @@ export class IelouStage extends LitElement {
         </section>
       `;
     }
-    return html` <h2 class="no-project-selected">Select a project...</h2> `;
+    return html`
+      <h2 class="no-project-selected">
+        ${getRandomItemFromArray(startPageSentences)}
+      </h2>
+    `;
   }
 
   _onElementDoubleClick(event: MouseEvent) {
