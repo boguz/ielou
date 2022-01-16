@@ -55,6 +55,7 @@ export class IelouApp extends LitElement {
     this._onNoteDeleteClick = this._onNoteDeleteClick.bind(this);
     this._onNoteIsPinnedToggle = this._onNoteIsPinnedToggle.bind(this);
     this._onUpdateNote = this._onUpdateNote.bind(this);
+    this._onShowStartPage = this._onShowStartPage.bind(this);
   }
 
   connectedCallback() {
@@ -86,6 +87,7 @@ export class IelouApp extends LitElement {
       this._onNoteIsPinnedToggle
     );
     this.addEventListener('ielou-update-note', this._onUpdateNote);
+    this.addEventListener('ielou-show-start-page', this._onShowStartPage);
   }
 
   disconnectedCallback() {
@@ -120,6 +122,7 @@ export class IelouApp extends LitElement {
       this._onNoteIsPinnedToggle
     );
     this.removeEventListener('ielou-update-note', this._onUpdateNote);
+    this.removeEventListener('ielou-show-start-page', this._onShowStartPage);
   }
 
   updateState() {
@@ -240,6 +243,12 @@ export class IelouApp extends LitElement {
       });
       return project;
     });
+    this._onUpdateStore(newState);
+  }
+
+  _onShowStartPage() {
+    const newState = this.state;
+    newState.activeProject = null;
     this._onUpdateStore(newState);
   }
 

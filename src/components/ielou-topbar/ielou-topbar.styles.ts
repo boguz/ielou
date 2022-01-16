@@ -28,12 +28,17 @@ export const ielouTopbarStyles = css`
   .logo {
     height: var(--topbar-logo-height);
     width: auto;
+    cursor: pointer;
   }
 
   @media (hover: hover) {
     .burger:hover {
       --burgton-button-line-color: var(--color-primary-light);
       --burgton-button-line-color-active: var(--color-primary-light);
+    }
+
+    .logo:hover {
+      opacity: 0.75;
     }
   }
 
