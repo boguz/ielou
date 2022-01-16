@@ -1,5 +1,10 @@
 import { v4 as v4uuid } from 'uuid';
 import { ProjectInterface } from '../types/interfaces.js';
+import { getRandomItemFromArray } from '../utils/utils.js';
+import {
+  projectTitles,
+  projectDescriptions,
+} from '../config/randomSentences.js';
 
 const createDate = (): string => {
   const options = {
@@ -14,8 +19,8 @@ const createDate = (): string => {
 export function createProject(): ProjectInterface {
   return {
     id: v4uuid().toString(),
-    title: 'New Project',
-    description: 'Project description goes here. Double click to edit...',
+    title: getRandomItemFromArray(projectTitles),
+    description: getRandomItemFromArray(projectDescriptions),
     date: createDate(),
     notes: [],
   };
