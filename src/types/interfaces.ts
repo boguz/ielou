@@ -13,6 +13,7 @@ export interface ProjectInterface {
 }
 
 export type IelouStoreType = {
+  isDark: boolean;
   activeProject: string | null;
   projects: ProjectInterface[];
 };

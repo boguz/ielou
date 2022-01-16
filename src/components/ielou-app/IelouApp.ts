@@ -12,6 +12,7 @@ import { ielouAppStyles } from './ielou-app.styles.js';
 import '../ielou-topbar/ielou-topbar.js';
 import '../ielou-sidebar/ielou-sidebar.js';
 import '../ielou-stage/ielou-stage.js';
+import '../ielou-settings/ielou-settings.js';
 import { createProject } from '../../factories/newProject.js';
 import { createNote } from '../../factories/newNote.js';
 
@@ -19,6 +20,17 @@ export class IelouApp extends LitElement {
   @property({ type: Array }) state: IelouStoreType = defaultStore;
 
   @property({ type: Boolean, reflect: true }) sidebarVisible = false;
+
+  @property({
+    type: Boolean,
+    hasChanged: (value: boolean) => {
+      value
+        ? document.documentElement.setAttribute('isDark', '')
+        : document.documentElement.removeAttribute('isDark');
+      return value;
+    },
+  })
+  isDark = false;
 
   static styles = [ielouAppStyles];
 
@@ -41,6 +53,7 @@ export class IelouApp extends LitElement {
     }
 
     this.state = getStore();
+    this.isDark = this.state.isDark;
     // console.log('STORE', this.state);
 
     this._onUpdateStore = this._onUpdateStore.bind(this);
@@ -56,6 +69,8 @@ export class IelouApp extends LitElement {
     this._onNoteIsPinnedToggle = this._onNoteIsPinnedToggle.bind(this);
     this._onUpdateNote = this._onUpdateNote.bind(this);
     this._onShowStartPage = this._onShowStartPage.bind(this);
+    this._onSettingsButtonClick = this._onSettingsButtonClick.bind(this);
+    this._onSettingsThemeToggle = this._onSettingsThemeToggle.bind(this);
   }
 
   connectedCallback() {
@@ -88,6 +103,11 @@ export class IelouApp extends LitElement {
     );
     this.addEventListener('ielou-update-note', this._onUpdateNote);
     this.addEventListener('ielou-show-start-page', this._onShowStartPage);
+    this.addEventListener(
+      'ielou-settings-button-click',
+      this._onSettingsButtonClick
+    );
+    this.addEventListener('ielou-toggle-theme', this._onSettingsThemeToggle);
   }
 
   disconnectedCallback() {
@@ -123,10 +143,16 @@ export class IelouApp extends LitElement {
     );
     this.removeEventListener('ielou-update-note', this._onUpdateNote);
     this.removeEventListener('ielou-show-start-page', this._onShowStartPage);
+    this.removeEventListener(
+      'ielou-settings-button-click',
+      this._onSettingsButtonClick
+    );
+    this.removeEventListener('ielou-toggle-theme', this._onSettingsThemeToggle);
   }
 
   updateState() {
     this.state = getStore();
+    this.isDark = this.state.isDark;
     console.log('Updated State', this.state);
   }
 
@@ -252,6 +278,18 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  _onSettingsButtonClick() {
+    const newState = this.state;
+    newState.activeProject = 'settings';
+    this._onUpdateStore(newState);
+  }
+
+  _onSettingsThemeToggle() {
+    const newState = this.state;
+    newState.isDark = !newState.isDark;
+    this._onUpdateStore(newState);
+  }
+
   render() {
     return html`
       <ielou-topbar></ielou-topbar>
@@ -261,7 +299,9 @@ export class IelouApp extends LitElement {
         .activeProject="${this.state.activeProject}"
       >
       </ielou-sidebar>
-      <ielou-stage .project="${this.activeProject}"></ielou-stage>
+      ${this.state.activeProject === 'settings'
+        ? html`<ielou-settings></ielou-settings>`
+        : html`<ielou-stage .project="${this.activeProject}"></ielou-stage>`}
     `;
   }
 }

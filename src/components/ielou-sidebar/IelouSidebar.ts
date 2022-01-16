@@ -13,19 +13,26 @@ export class IelouSidebar extends LitElement {
 
   render() {
     return html`
-      <ul class="list">
-        ${this.projects!.length
-          ? this.projects!.map((project: ProjectInterface) =>
-              this._renderListItem(project)
-            )
-          : this._renderNoProjectsMessage()}
-      </ul>
-      <button
-        class="new-project-button"
-        @click="${this._onNewProjectButtonClick}"
-      >
-        New Project
-      </button>
+      <div class="list-container">
+        <ul class="list">
+          ${this.projects!.length
+            ? this.projects!.map((project: ProjectInterface) =>
+                this._renderListItem(project)
+              )
+            : this._renderNoProjectsMessage()}
+        </ul>
+        <button
+          class="new-project-button"
+          @click="${this._onNewProjectButtonClick}"
+        >
+          New Project
+        </button>
+      </div>
+      <div class="bottom-buttons">
+        <button class="settings-button" @click="${this._onSettingsButtonClick}">
+          Settings
+        </button>
+      </div>
     `;
   }
 
@@ -79,5 +86,14 @@ export class IelouSidebar extends LitElement {
     if (event.code === 'Enter' || event.key === 'Enter') {
       target.click();
     }
+  }
+
+  _onSettingsButtonClick() {
+    this.dispatchEvent(
+      new CustomEvent('ielou-settings-button-click', {
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 }

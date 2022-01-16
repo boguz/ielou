@@ -11,11 +11,17 @@ export const ielouSidebarStyles = css`
     transition: all var(--transition-duration-normal) ease-in-out;
     overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   :host([isvisible]) {
     width: var(--sidebar-width);
     padding: var(--space-normal);
+  }
+
+  .list-container {
+    flex-grow: 1;
   }
 
   .list {
@@ -74,6 +80,28 @@ export const ielouSidebarStyles = css`
     border-radius: var(--border-radius-normal);
     cursor: pointer;
     outline: none;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .settings {
+    border: 3px solid red;
+  }
+
+  .bottom-buttons {
+    margin-top: var(--space-double);
+  }
+
+  .settings-button {
+    border: none;
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
   }
 
   @media (hover: hover) {
@@ -83,6 +111,10 @@ export const ielouSidebarStyles = css`
 
     .new-project-button:hover {
       border: 3px dashed var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .settings-button:hover {
       color: var(--color-primary);
     }
   }

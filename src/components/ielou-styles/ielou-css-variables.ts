@@ -6,14 +6,6 @@ export const ielouCssVariables = [
   ielouCssIcons,
   css`
     :host {
-      /* COLORS */
-      --color-surface: #fbeac0;
-      --color-primary: #6a9a8f;
-      --color-primary-light: #6da798;
-      --color-pinned: #eec0b5;
-      --color-text-primary: #4c5051;
-      --color-text-secondary: #40444677;
-
       /* SPACING */
       --space-normal: 1rem;
       --space-double: 2rem;

@@ -1,9 +1,10 @@
 import { css } from 'lit';
+import { BREAKPOINT } from '../../config/constants.js';
 
 export const ielouStageStyles = css`
   :host {
     box-sizing: border-box;
-    background-color: var(--color-background);
+    background-color: var(--color-bg);
     grid-area: stage;
     padding: var(--space-normal);
   }
@@ -122,7 +123,7 @@ export const ielouStageStyles = css`
     }
   }
 
-  @media screen and (min-width: 840px) {
+  @media screen and (min-width: ${BREAKPOINT}px) {
     :host {
       padding: var(--space-normal) var(--space-double) var(--space-double)
         calc(var(--sidebar-width) + var(--space-double));

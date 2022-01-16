@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="Description" content="Put your description here.">
+  <meta name="Description" content="ielou - A simple browser sticky notes app">
   <base href="/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,11 @@
       font-weight: 500;
     }
   </style>
-  <title>ielou</title>
+
+  <!-- Add color variables to root -->
+  <link rel="stylesheet" href="/src/components/ielou-styles/ielou-css-colors.css">
+
+  <title>ielou notes app</title>
 
   <script type="module" src="./out-tsc/src/components/ielou-app/ielou-app.js" defer></script>
 
@@ -28,7 +32,6 @@
 
 <body>
   <ielou-app></ielou-app>
-
 </body>
 
 </html>
