@@ -54,6 +54,11 @@ export const ielouSettingsStyles = css`
     padding: var(--space-half);
     border-radius: var(--border-radius-normal);
     cursor: pointer;
+    appearance: none;
+  }
+
+  .setting__file-button {
+    display: none;
   }
 
   @media (hover: hover) {

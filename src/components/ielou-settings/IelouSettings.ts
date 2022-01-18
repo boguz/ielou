@@ -1,9 +1,13 @@
 import { LitElement, html } from 'lit';
+import { ref, createRef } from 'lit/directives/ref.js';
 import { ielouStyles } from '../ielou-styles/ielou-styles.js';
 import { ielouSettingsStyles } from './ielou-settings.styles.js';
+import { isValidImportData } from '../../utils/isValidImportData.js';
 
 export class IelouSettings extends LitElement {
   static styles = [ielouStyles, ielouSettingsStyles];
+
+  importButtonRef = createRef<HTMLInputElement>();
 
   render() {
     return html`
@@ -47,6 +51,11 @@ export class IelouSettings extends LitElement {
           <button class="setting__button" @click="${this._onImportButtonClick}">
             Import
           </button>
+          <input
+            type="file"
+            class="setting__file-button"
+            ${ref(this.importButtonRef)}
+          />
         </div>
       </section>
     `;
@@ -54,7 +63,7 @@ export class IelouSettings extends LitElement {
 
   _onThemeToggleClick() {
     this.dispatchEvent(
-      new CustomEvent('ielou-toggle-theme', {
+      new CustomEvent('ielou-toggle-theme-click', {
         bubbles: true,
         composed: true,
       })
@@ -62,14 +71,55 @@ export class IelouSettings extends LitElement {
   }
 
   _onResetButtonClick() {
-    console.log('RESET CLICK');
+    this.dispatchEvent(
+      new CustomEvent('ielou-reset-click', {
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   _onExportButtonClick() {
-    console.log('EXPORT CLICK');
+    this.dispatchEvent(
+      new CustomEvent('ielou-export-button-click', {
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   _onImportButtonClick() {
-    console.log('IMPORT CLICK');
+    this.importButtonRef.value!.click();
+
+    this.importButtonRef.value!.addEventListener('change', (event: Event) => {
+      const input = event.target as HTMLInputElement;
+
+      if (!input.files?.length) {
+        console.error('Could not load file');
+        return;
+      }
+
+      const reader: FileReader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          const importData = JSON.parse(reader.result);
+          if (isValidImportData(importData)) {
+            this.dispatchEvent(
+              new CustomEvent('ielou-import-data', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                  importData: importData.projects,
+                },
+              })
+            );
+          } else {
+            console.error('Import data is not valid!');
+          }
+        }
+      };
+      // @ts-ignore
+      reader.readAsText(event.target.files[0]);
+    });
   }
 }

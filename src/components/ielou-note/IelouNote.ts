@@ -127,9 +127,10 @@ export class IelouNote extends LitElement {
 
   _onContentInput(event: KeyboardEvent) {
     const target = event.currentTarget as HTMLParagraphElement;
-    if (!target.textContent!.trim().length) return 0;
+    if (!target || !target.textContent || !target.textContent.trim().length)
+      return 0;
     this.countCurrent = this.getCount;
-    return 0;
+    return null;
   }
 
   _onContentKeyDown(event: KeyboardEvent) {

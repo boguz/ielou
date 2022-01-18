@@ -26,7 +26,7 @@ export class IelouTopbar extends LitElement {
     super();
     const existsBurgtonButton = BurgtonButton;
     if (!existsBurgtonButton) {
-      console.log('could not load the burger button!');
+      console.error('Could not load the burger button!');
     }
   }
 

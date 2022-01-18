@@ -17,3 +17,9 @@ export type IelouStoreType = {
   activeProject: string | null;
   projects: ProjectInterface[];
 };
+
+export interface ImportExportDataInterface {
+  title: string;
+  date: string;
+  projects: ProjectInterface[];
+}

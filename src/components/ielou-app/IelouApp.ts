@@ -15,6 +15,7 @@ import '../ielou-stage/ielou-stage.js';
 import '../ielou-settings/ielou-settings.js';
 import { createProject } from '../../factories/newProject.js';
 import { createNote } from '../../factories/newNote.js';
+import { createExportData } from '../../factories/newExportData.js';
 
 export class IelouApp extends LitElement {
   @property({ type: Array }) state: IelouStoreType = defaultStore;
@@ -70,7 +71,11 @@ export class IelouApp extends LitElement {
     this._onUpdateNote = this._onUpdateNote.bind(this);
     this._onShowStartPage = this._onShowStartPage.bind(this);
     this._onSettingsButtonClick = this._onSettingsButtonClick.bind(this);
-    this._onSettingsThemeToggle = this._onSettingsThemeToggle.bind(this);
+    this._onSettingsThemeToggleClick =
+      this._onSettingsThemeToggleClick.bind(this);
+    this._onResetClick = this._onResetClick.bind(this);
+    this._onExportButtonClick = this._onExportButtonClick.bind(this);
+    this._onImportData = this._onImportData.bind(this);
   }
 
   connectedCallback() {
@@ -107,7 +112,16 @@ export class IelouApp extends LitElement {
       'ielou-settings-button-click',
       this._onSettingsButtonClick
     );
-    this.addEventListener('ielou-toggle-theme', this._onSettingsThemeToggle);
+    this.addEventListener(
+      'ielou-toggle-theme-click',
+      this._onSettingsThemeToggleClick
+    );
+    this.addEventListener('ielou-reset-click', this._onResetClick);
+    this.addEventListener(
+      'ielou-export-button-click',
+      this._onExportButtonClick
+    );
+    this.addEventListener('ielou-import-data', this._onImportData);
   }
 
   disconnectedCallback() {
@@ -147,7 +161,16 @@ export class IelouApp extends LitElement {
       'ielou-settings-button-click',
       this._onSettingsButtonClick
     );
-    this.removeEventListener('ielou-toggle-theme', this._onSettingsThemeToggle);
+    this.removeEventListener(
+      'ielou-toggle-theme-click',
+      this._onSettingsThemeToggleClick
+    );
+    this.removeEventListener('ielou-reset-click', this._onResetClick);
+    this.removeEventListener(
+      'ielou-export-button-click',
+      this._onExportButtonClick
+    );
+    this.removeEventListener('ielou-import-data', this._onImportData);
   }
 
   updateState() {
@@ -284,9 +307,52 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
-  _onSettingsThemeToggle() {
+  _onSettingsThemeToggleClick() {
     const newState = this.state;
     newState.isDark = !newState.isDark;
+    this._onUpdateStore(newState);
+  }
+
+  _onResetClick() {
+    const resetConfirmation = window.confirm(
+      'Do you really want to reset your data? This will permanently delete all of your projects and notes.'
+    );
+    if (resetConfirmation) {
+      const newState = this.state;
+      newState.projects = [];
+      this._onUpdateStore(newState);
+    }
+  }
+
+  _onExportButtonClick() {
+    const newExportData = createExportData(this.state.projects);
+    const dataStr = JSON.stringify(newExportData);
+    const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
+      dataStr
+    )}`;
+    const exportFileDefaultName = 'ielouAppExport.json';
+    const fakeLinkElement = document.createElement('a');
+    fakeLinkElement.setAttribute('href', dataUri);
+    fakeLinkElement.setAttribute('download', exportFileDefaultName);
+    fakeLinkElement.click();
+  }
+
+  _onImportData(event: Event) {
+    const { importData } = (<CustomEvent>event).detail;
+    const newState = this.state;
+    const newProjects = newState.projects;
+
+    // Add only projects that don't already exist
+    importData.forEach((project: ProjectInterface) => {
+      const projectAlreadyExists = newProjects.filter(
+        (newProject: ProjectInterface) => newProject.id === project.id
+      );
+      if (!projectAlreadyExists.length) {
+        newProjects.push(project);
+      }
+    });
+
+    newState.projects = newProjects;
     this._onUpdateStore(newState);
   }
 

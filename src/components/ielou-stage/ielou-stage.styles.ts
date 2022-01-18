@@ -42,8 +42,9 @@ export const ielouStageStyles = css`
     align-items: center;
     justify-content: center;
     text-align: center;
-    opacity: 0.125;
     margin: 0;
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
   }
 
   .delete-button {
