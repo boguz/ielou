@@ -12,7 +12,7 @@ export class IelouTopbar extends LitElement {
       <header class="header">
         <burgton-button type="arrow-left" class="burger"></burgton-button>
         <img
-          src="./dist/assets/logo.svg"
+          src="./assets/logo.svg"
           alt="ielou app logo"
           class="logo"
           @click="${this._onLogoClick}"

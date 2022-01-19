@@ -68,7 +68,12 @@
       ],
       "class-methods-use-this": "off",
       "no-param-reassign": "off",
-      "no-unused-expressions": ["error", { "allowTernary": true }]
+      "no-unused-expressions": [
+        "error",
+        {
+          "allowTernary": true
+        }
+      ]
     }
   },
   "prettier": {
