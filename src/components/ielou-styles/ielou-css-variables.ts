@@ -2,6 +2,9 @@ import { css } from 'lit';
 import { ielouCssIcons } from './ielou-css-icons.js';
 import { BREAKPOINT } from '../../config/constants.js';
 
+/**
+ * CSS Variables to be used through out the ielou app
+ */
 export const ielouCssVariables = [
   ielouCssIcons,
   css`

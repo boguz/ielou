@@ -79,12 +79,22 @@ export class IelouStage extends LitElement {
     `;
   }
 
+  /**
+   * Make either the project's title or description editable
+   *
+   * @param event
+   */
   _onElementDoubleClick(event: MouseEvent) {
     const target = event.currentTarget as HTMLHeadingElement;
     target.setAttribute('contenteditable', '');
     target.focus();
   }
 
+  /**
+   * trigger project's title update
+   *
+   * @param event
+   */
   _onTitleBlur(event: FocusEvent) {
     const target = event.currentTarget as HTMLHeadingElement;
     this.dispatchEvent(
@@ -99,6 +109,11 @@ export class IelouStage extends LitElement {
     );
   }
 
+  /**
+   * Trigger project's description update
+   *
+   * @param event
+   */
   _onDescriptionBlur(event: FocusEvent) {
     const target = event.currentTarget as HTMLHeadingElement;
     this.dispatchEvent(
@@ -113,6 +128,11 @@ export class IelouStage extends LitElement {
     );
   }
 
+  /**
+   * Add key down event to the project's title and description to improve a11y
+   *
+   * @param event
+   */
   _onElementKeyDown(event: KeyboardEvent) {
     const target = event.currentTarget as HTMLElement;
     if (event.key === 'Enter' || event.code === 'Enter') {
@@ -120,6 +140,9 @@ export class IelouStage extends LitElement {
     }
   }
 
+  /**
+   * Trigger project delete when the delete button is clicked
+   */
   _onDeleteButtonClick() {
     const deleteConfirmation = window.confirm(
       `Do you really want to delete the "${this.project!.title}" project?`
@@ -138,6 +161,9 @@ export class IelouStage extends LitElement {
     }
   }
 
+  /**
+   * Trigger add new note when the 'New note' button is clicked
+   */
   _onNewNoteButtonClick() {
     this.dispatchEvent(
       new CustomEvent('ielou-new-note-button-click', {

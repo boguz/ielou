@@ -1,5 +1,8 @@
 import { css } from 'lit';
 
+/**
+ * styles for the ielou-settings component
+ */
 export const ielouSettingsStyles = css`
   :host {
     box-sizing: border-box;

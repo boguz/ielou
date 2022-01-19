@@ -1,6 +1,9 @@
 import { css } from 'lit';
 import { BREAKPOINT } from '../../config/constants.js';
 
+/**
+ * Styles for the ielou-topbar component
+ */
 export const ielouTopbarStyles = css`
   :host {
     box-sizing: border-box;

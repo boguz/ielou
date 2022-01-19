@@ -61,6 +61,9 @@ export class IelouSettings extends LitElement {
     `;
   }
 
+  /**
+   * trigger a theme toggle
+   */
   _onThemeToggleClick() {
     this.dispatchEvent(
       new CustomEvent('ielou-toggle-theme-click', {
@@ -70,6 +73,9 @@ export class IelouSettings extends LitElement {
     );
   }
 
+  /**
+   * Trigger an app data reset
+   */
   _onResetButtonClick() {
     this.dispatchEvent(
       new CustomEvent('ielou-reset-click', {
@@ -79,6 +85,9 @@ export class IelouSettings extends LitElement {
     );
   }
 
+  /**
+   * Trigger app data export
+   */
   _onExportButtonClick() {
     this.dispatchEvent(
       new CustomEvent('ielou-export-button-click', {
@@ -88,6 +97,9 @@ export class IelouSettings extends LitElement {
     );
   }
 
+  /**
+   * Trigger app data import
+   */
   _onImportButtonClick() {
     this.importButtonRef.value!.click();
 

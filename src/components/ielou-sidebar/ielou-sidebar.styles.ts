@@ -1,6 +1,9 @@
 import { css } from 'lit';
 import { BREAKPOINT } from '../../config/constants.js';
 
+/**
+ * Styles for the ielou-sidebar component
+ */
 export const ielouSidebarStyles = css`
   :host {
     box-sizing: border-box;

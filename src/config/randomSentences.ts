@@ -50,6 +50,9 @@ export const noteContents: string[] = [
   'Badabim, badabum!',
 ];
 
+/**
+ * Sentences to be used on the start page
+ */
 export const startPageSentences: string[] = [
   'Select a project...',
   'Select a project to get started!',

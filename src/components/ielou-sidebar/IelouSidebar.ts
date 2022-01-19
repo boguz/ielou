@@ -59,6 +59,9 @@ export class IelouSidebar extends LitElement {
     `;
   }
 
+  /**
+   * Trigger add new project when the 'New Project' button os clicked
+   */
   _onNewProjectButtonClick() {
     this.dispatchEvent(
       new CustomEvent('ielou-new-project-button-click', {
@@ -68,6 +71,11 @@ export class IelouSidebar extends LitElement {
     );
   }
 
+  /**
+   * Trigger project select when a list item is clicked
+   *
+   * @param event
+   */
   _onListItemClick(event: MouseEvent) {
     const target = event.currentTarget as HTMLDListElement;
     this.dispatchEvent(
@@ -81,6 +89,11 @@ export class IelouSidebar extends LitElement {
     );
   }
 
+  /**
+   * Add key down to the list items to improve a11y
+   *
+   * @param event
+   */
   _onListItemKeyDown(event: KeyboardEvent) {
     const target = event.currentTarget as HTMLDListElement;
     if (event.code === 'Enter' || event.key === 'Enter') {
@@ -88,6 +101,9 @@ export class IelouSidebar extends LitElement {
     }
   }
 
+  /**
+   * trigger 'show settings' view when the settings button is clicked
+   */
   _onSettingsButtonClick() {
     this.dispatchEvent(
       new CustomEvent('ielou-settings-button-click', {

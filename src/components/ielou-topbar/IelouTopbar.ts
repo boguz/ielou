@@ -30,6 +30,9 @@ export class IelouTopbar extends LitElement {
     }
   }
 
+  /**
+   * Trigger show the start page on logo click
+   */
   _onLogoClick() {
     this.dispatchEvent(
       new CustomEvent('ielou-show-start-page', {
@@ -39,6 +42,11 @@ export class IelouTopbar extends LitElement {
     );
   }
 
+  /**
+   * Add 'enter' key down to the logo to improve a11y
+   *
+   * @param event
+   */
   _onLogoKeydown(event: KeyboardEvent) {
     const target = event.currentTarget as HTMLImageElement;
     if (event.code === 'Enter' || event.key === 'Enter') {

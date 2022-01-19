@@ -5,23 +5,19 @@ import {
   projectTitles,
   projectDescriptions,
 } from '../config/randomSentences.js';
+import { DATE_OPTIONS } from '../config/constants.js';
 
-const createDate = (): string => {
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  } as const;
-  return new Date().toLocaleString(undefined, options);
-};
-
+/**
+ * Create a new project with a random title and random description
+ *
+ * @returns {ProjectInterface} Empty project with random title and description
+ */
 export function createProject(): ProjectInterface {
   return {
     id: v4uuid().toString(),
     title: getRandomItemFromArray(projectTitles),
     description: getRandomItemFromArray(projectDescriptions),
-    date: createDate(),
+    date: new Date().toLocaleString(undefined, DATE_OPTIONS),
     notes: [],
   };
 }

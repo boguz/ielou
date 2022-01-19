@@ -14,10 +14,13 @@ export class IelouNote extends LitElement {
 
   private countTotal: number;
 
-  private allowKeysWhenFull: string[];
+  private allowedKeysWhenFull: string[];
 
   contentRef = createRef<HTMLParagraphElement>();
 
+  /**
+   * Get text length
+   */
   get getCount(): number {
     const contentText = this.contentRef.value!.textContent!.trim() || '';
     return contentText.length || 0;
@@ -27,7 +30,7 @@ export class IelouNote extends LitElement {
     super();
 
     this.countTotal = 80;
-    this.allowKeysWhenFull = [
+    this.allowedKeysWhenFull = [
       'Backspace',
       'ArrowRight',
       'ArrowLeft',
@@ -76,6 +79,9 @@ export class IelouNote extends LitElement {
     this.countCurrent = this.getCount;
   }
 
+  /**
+   * Trigger a note delete after confirmation when the delete button os pressed
+   */
   _onDeleteButtonClick() {
     const deleteConfirmation = window.confirm(
       `Are you sure you want to delete this note?`
@@ -93,6 +99,9 @@ export class IelouNote extends LitElement {
     }
   }
 
+  /**
+   * Trigger note pinned state toggle when the pin icon is clicked
+   */
   _onPinButtonClick() {
     this.dispatchEvent(
       new CustomEvent('ielou-note-is-pinned-toggle', {
@@ -105,12 +114,21 @@ export class IelouNote extends LitElement {
     );
   }
 
+  /**
+   * Make content editable when it is double clicked
+   *
+   * @param event
+   */
   _onContentDoubleClick(event: Event) {
     const target = event.currentTarget as HTMLParagraphElement;
     target.setAttribute('contenteditable', '');
     target.focus();
   }
 
+  /**
+   * Target a note content update on note blur
+   * @param event
+   */
   _onContentBlur(event: Event) {
     const target = event.currentTarget as HTMLParagraphElement;
     this.dispatchEvent(
@@ -125,6 +143,11 @@ export class IelouNote extends LitElement {
     );
   }
 
+  /**
+   * Update the note content length count whenever there is new input
+   *
+   * @param event
+   */
   _onContentInput(event: KeyboardEvent) {
     const target = event.currentTarget as HTMLParagraphElement;
     if (!target || !target.textContent || !target.textContent.trim().length)
@@ -133,13 +156,20 @@ export class IelouNote extends LitElement {
     return null;
   }
 
+  /**
+   * When we are editing the note's content, on a key down:
+   *  - prevent content to be longer as content's max length
+   *  - On enter trigger blur to save changes
+   *
+   * @param event
+   */
   _onContentKeyDown(event: KeyboardEvent) {
     const target = event.currentTarget as HTMLParagraphElement;
     const contentLength = target.textContent!.trim().length;
     const eventCode = event.code || event.key;
     if (
       contentLength >= this.countTotal &&
-      !this.allowKeysWhenFull.includes(eventCode)
+      !this.allowedKeysWhenFull.includes(eventCode)
     ) {
       event.preventDefault();
     } else if (event.code === 'Enter' || event.key === 'Enter') {
@@ -147,6 +177,11 @@ export class IelouNote extends LitElement {
     }
   }
 
+  /**
+   * Add key down events to the button icons to improve a11y
+   *
+   * @param event
+   */
   _onButtonKeyDown(event: KeyboardEvent) {
     const target = event.currentTarget as HTMLButtonElement;
     if (event.code === 'Enter' || event.key === 'Enter') {

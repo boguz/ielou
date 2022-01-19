@@ -1,6 +1,9 @@
 import { css } from 'lit';
 import { BREAKPOINT } from '../../config/constants.js';
 
+/**
+ * Styles for the ielou-note component
+ */
 export const ielouNoteStyles = css`
   :host {
     position: relative;

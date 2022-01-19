@@ -15,7 +15,7 @@ import '../ielou-stage/ielou-stage.js';
 import '../ielou-settings/ielou-settings.js';
 import { createProject } from '../../factories/newProject.js';
 import { createNote } from '../../factories/newNote.js';
-import { createExportData } from '../../factories/newExportData.js';
+import { createExportDataAsJSON } from '../../factories/newExportData.js';
 
 export class IelouApp extends LitElement {
   @property({ type: Array }) state: IelouStoreType = defaultStore;
@@ -35,6 +35,9 @@ export class IelouApp extends LitElement {
 
   static styles = [ielouAppStyles];
 
+  /**
+   * Get the active project data
+   */
   get activeProject(): ProjectInterface | null {
     if (!this.state || !this.state.activeProject || !this.state.projects.length)
       return null;
@@ -55,7 +58,6 @@ export class IelouApp extends LitElement {
 
     this.state = getStore();
     this.isDark = this.state.isDark;
-    // console.log('STORE', this.state);
 
     this._onUpdateStore = this._onUpdateStore.bind(this);
     this._onBurgerClick = this._onBurgerClick.bind(this);
@@ -83,6 +85,7 @@ export class IelouApp extends LitElement {
     // @ts-ignore
     window.addEventListener('ielou-update-store', this._onUpdateStore);
     window.addEventListener('burgton-button-state-change', this._onBurgerClick);
+
     this.addEventListener(
       'ielou-new-project-button-click',
       this._onNewProjectButtonClick
@@ -132,6 +135,7 @@ export class IelouApp extends LitElement {
       'burgton-button-state-change',
       this._onBurgerClick
     );
+
     this.removeEventListener(
       'ielou-new-project-button-click',
       this._onNewProjectButtonClick
@@ -173,21 +177,35 @@ export class IelouApp extends LitElement {
     this.removeEventListener('ielou-import-data', this._onImportData);
   }
 
+  /**
+   * Update the app's state by getting the current store content
+   */
   updateState() {
     this.state = getStore();
     this.isDark = this.state.isDark;
-    console.log('Updated State', this.state);
+    // console.log('Updated State', this.state);
   }
 
+  /**
+   * Toggle sidebar visibility on burger button click
+   */
   _onBurgerClick() {
     this.sidebarVisible = !this.sidebarVisible;
   }
 
+  /**
+   * Save new state to the local storage and update the app's state
+   *
+   * @param newState
+   */
   _onUpdateStore(newState: IelouStoreType) {
     updateStore(newState);
     this.updateState();
   }
 
+  /**
+   * Create a new project and make it the active project when the 'New Project' button is clicked
+   */
   _onNewProjectButtonClick() {
     const newProject = createProject();
     const newState = this.state;
@@ -196,12 +214,22 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Set the clicked project as the active project
+   *
+   * @param event
+   */
   _onSelectProject(event: Event) {
     const newState = this.state;
     newState.activeProject = (<CustomEvent>event).detail.selectedProject;
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Update project title
+   *
+   * @param event
+   */
   _onUpdateProjectTitle(event: Event) {
     const { projectId, newTitle } = (<CustomEvent>event).detail;
     const newState = this.state;
@@ -216,6 +244,11 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Update project description
+   *
+   * @param event
+   */
   _onUpdateProjectDescription(event: Event) {
     const { projectId, newDescription } = (<CustomEvent>event).detail;
     const newState = this.state;
@@ -230,6 +263,11 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Delete a project when the delete button os clicked
+   *
+   * @param event
+   */
   _onDeleteProject(event: Event) {
     const newState = this.state;
     const { projectId } = (<CustomEvent>event).detail;
@@ -240,6 +278,11 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Create new note when the 'New Note' button os clicked
+   *
+   * @param event
+   */
   _onNewNoteButtonClick(event: Event) {
     const { projectId } = (<CustomEvent>event).detail;
     const newNote = createNote();
@@ -253,6 +296,11 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Delete a note when the delete button is clicked
+   *
+   * @param event
+   */
   _onNoteDeleteClick(event: Event) {
     const { noteId } = (<CustomEvent>event).detail;
     const newState = this.state;
@@ -265,6 +313,11 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Toggle a note's pinned state
+   *
+   * @param event
+   */
   _onNoteIsPinnedToggle(event: Event) {
     const { noteId } = (<CustomEvent>event).detail;
     const newState = this.state;
@@ -280,6 +333,11 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Update note content
+   *
+   * @param event
+   */
   _onUpdateNote(event: Event) {
     const { noteId, newContent } = (<CustomEvent>event).detail;
     const newState = this.state;
@@ -295,24 +353,36 @@ export class IelouApp extends LitElement {
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Set active project to 'null' so we show the start page
+   */
   _onShowStartPage() {
     const newState = this.state;
     newState.activeProject = null;
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Show the settings page when the 'Settings' button is clicked
+   */
   _onSettingsButtonClick() {
     const newState = this.state;
     newState.activeProject = 'settings';
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Toggle dark theme when the theme button is clicked
+   */
   _onSettingsThemeToggleClick() {
     const newState = this.state;
     newState.isDark = !newState.isDark;
     this._onUpdateStore(newState);
   }
 
+  /**
+   * Reset app's projects when the reset button is clicked
+   */
   _onResetClick() {
     const resetConfirmation = window.confirm(
       'Do you really want to reset your data? This will permanently delete all of your projects and notes.'
@@ -324,11 +394,13 @@ export class IelouApp extends LitElement {
     }
   }
 
+  /**
+   * Export projects as JSON file
+   */
   _onExportButtonClick() {
-    const newExportData = createExportData(this.state.projects);
-    const dataStr = JSON.stringify(newExportData);
+    const newExportData = createExportDataAsJSON(this.state.projects);
     const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
-      dataStr
+      newExportData
     )}`;
     const exportFileDefaultName = 'ielouAppExport.json';
     const fakeLinkElement = document.createElement('a');
@@ -337,6 +409,11 @@ export class IelouApp extends LitElement {
     fakeLinkElement.click();
   }
 
+  /**
+   * Import data from a JSON file
+   *
+   * @param event
+   */
   _onImportData(event: Event) {
     const { importData } = (<CustomEvent>event).detail;
     const newState = this.state;
